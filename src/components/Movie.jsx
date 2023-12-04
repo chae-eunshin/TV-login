@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { movies } from "./MovieDummy";
 import Detail from '../pages/Detail';
 import { AppContainer, MovieContainer, MovieImage, MovieInfo, MovieTitle, MovieInfoText } from "../Movie.style";
+import MoviePage from "../pages/MoviePage";
+import { Link } from "react-router-dom";
 
 const IMG_BASE_URL = "https://image.tmdb.org/t/p/w1280/";
 
@@ -22,24 +24,23 @@ export default function Movie() {
   const isMovieSelected = (movieId) => {
     return selectedMovies.some(movie => movie.id === movieId); //선택된(소개를 열어놓은) 영화들 중에 지금 클릭한 영화의 아이디와 일치하는 영화가 있으면 true를 리턴해줌
   };
-
+  console.log(typeof(movies));
   return (
     <div>
       <AppContainer>
         {movies.results.map((item) => (
-          <MovieContainer key={item.id} onClick={() => handleMovieClick(item)}>
-            {isMovieSelected(item.id) ? ( //지금 클릭한 영화가 배열 안에 있는지 
-              <Detail overview={selectedMovies.find(movie => movie.id === item.id).overview} /> //있으면 영화 소개를 표시함 find는 조건이 참을 만족하는 첫번쨰 요소를 반환한다고 함
-            ) : ( //리액트는 여러 컴포넌트를 반환할 때 하나의 부모요소로 감싸야함 이때 fragment(빈 태그)를 사용할 수 있음
-              <> 
+            <Link to={`/movie/${item.title}`}>
+          <MovieContainer key={item.id}>
+            {/*있으면 영화 소개를 표시함 find는 조건이 참을 만족하는 첫번쨰 요소를 반환한다고 함*/}
+
+             {/*리액트는 여러 컴포넌트를 반환할 때 하나의 부모요소로 감싸야함 이때 fragment(빈 태그)를 사용할 수 있음*/}
                 <MovieImage src={IMG_BASE_URL + item.poster_path} alt="영화 포스터" />
                 <MovieInfo>
                   <MovieTitle>{item.title}</MovieTitle>
                   <MovieInfoText>{item.vote_average}</MovieInfoText>
                 </MovieInfo>
-              </>
-            )}
           </MovieContainer>
+          </Link>
         ))}
       </AppContainer>
     </div>
