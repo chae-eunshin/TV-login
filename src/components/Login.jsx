@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate 임포트
 
-export default function Login(){
-    const[login,setLogin] = useState(false);
+export default function Login() {
+    const navigate = useNavigate(); // useNavigate 훅 사용
+
+    const handleLoginClick = () => {
+        navigate('/login'); // 로그인 페이지로 이동
+    };
 
     return (
-        <div style={{display:"flex",alignItems:"row",paddingLeft:"20px"}}>
-            <button onClick={() => setLogin(!login)} style={{width:"100px",height:"30px",marginRight:"20px",marginTop:"13px",borderRadius:"20px"}}>{login ? '로그인' : '로그아웃'}</button>
-            <p style={{color:"white"}}>{login ? '환영합니다!' : '로그인 해주세요.'}</p>
+        <div style={{ display: "flex", alignItems: "row", paddingLeft: "20px" }}>
+            <button onClick={handleLoginClick} style={{ width: "100px", height: "30px", marginRight: "20px", marginTop: "13px", borderRadius: "20px" }}>로그인</button>
         </div>
     );
 }
