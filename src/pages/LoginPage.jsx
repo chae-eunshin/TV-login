@@ -38,9 +38,11 @@ const Button = styled.button`
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+
   const [pw, setPw] = useState('');
-  const [isValidpw, setIsValidpw] = useState(true);
+  const [isValidpw, setIsValidpw] = useState(false);
+
   const [isFormValid, setIsFormValid] = useState(false);
   
   const handleEmailChange = (event) => {
@@ -52,11 +54,6 @@ export default function LoginPage() {
     setIsValidEmail(emailRegex.test(emailValue)); //test 메서드는 JS의 정규 표현식을 사용하여 특정 문자열이 정규 표현식의 패턴에 맞는지 확인하는 데 사용. 이 메서드는 주어진 문자열이 패턴과 일치하면 true를 반환하고, 일치하지 않으면 false를 반환
   };
 
-  useEffect(() => {
-    // 이메일과 비밀번호가 모두 유효한 경우에만 isFormValid를 true로 설정
-    setIsFormValid(isValidEmail && isValidpw);
-  }, [isValidEmail, isValidpw]); // 의존성 배열에 isValidEmail과 isValidpw를 넣어서 이 값들이 변경될 때마다 실행
-
   const handlePwChange = (event) => {
     const pwValue = event.target.value;
     setPw(pwValue);
@@ -65,6 +62,12 @@ export default function LoginPage() {
     setIsValidpw(pwRegex.test(pwValue));
     
   };
+
+  useEffect(() => {
+    // 이메일과 비밀번호가 모두 유효한 경우에만 isFormValid를 true로 설정
+    setIsFormValid(isValidEmail && isValidpw);
+  }, [isValidEmail, isValidpw]); // 의존성 배열에 isValidEmail과 isValidpw를 넣어서 이 값들이 변경될 때마다 실행
+
 
   return (
     <Form>
